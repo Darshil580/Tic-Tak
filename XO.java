@@ -31,9 +31,12 @@ public class XO extends Applet implements ActionListener{
 	static String computer;
 	String[] combinations=null;
 	int[] num=null;
+	String inner_1;
+	String inner_2;
 	String temp_3;
 	String temp_4;
 	String temp_5;
+	String temp_6;
 	//String [] temp_3;
 	//ArrayList<String> temp_30= new ArrayList<String>();
 
@@ -176,7 +179,7 @@ public class XO extends Applet implements ActionListener{
 					break;
 			case "8":box8.setIcon(z);
 					box8.setEnabled(false);
-						i='8';
+					i='8';
 					break;
 			case "9":box9.setIcon(z);
 					box9.setEnabled(false);
@@ -272,7 +275,7 @@ public class XO extends Applet implements ActionListener{
 						computer+=String.valueOf(abc);
 						box9.setIcon(c);
 						box9.setEnabled(false);
-						break;	
+						break;
 			}
 			Label temp_tocheck= new Label(user);
 			this.add(temp_tocheck);
@@ -328,61 +331,80 @@ public class XO extends Applet implements ActionListener{
 			return String.valueOf(temp_3);
 		}
 		else if(user.length()==2){
-			
+			String[] unpair=new String[]{"493","431","617","671","279","297","813","831"};
 			for(int j=0;j<48;j++){
 				temp_4=combinations[j];
 				if(user.equals(temp_4.substring(0,2))){
 					return String.valueOf(temp_4.charAt(2));
 				}
 			}
+			for(int ad=0;ad<8;ad++){
+				temp_4=unpair[ad];
+				if(user.equals(temp_4.substring(0,2))){
+					return String.valueOf(temp_4.charAt(2));
+				}
+			}
 		}
 		else if(user.length()==3){
-		    int temp_count=0;
-			String tempStore;
+			String un;
+			char a1,a2,a3;
+			a1=user.charAt(0);
+			a2=user.charAt(1);
+			a3=user.charAt(2);
+			inner_1=new StringBuilder().append(a1).append(a3).toString();
+			inner_2=new StringBuilder().append(a2).append(a3).toString();
 			for(int j=0;j<48;j++){
 				temp_4=combinations[j];
 				if(computer.equals(temp_4.substring(0,2)) && user.charAt(2)!=temp_4.charAt(2)){
-				
 					return String.valueOf(temp_4.charAt(2));
 				}
-				else{
-					// This is for return a number that horizentally or vertically make move......
-					for (int ab=0;ab<48;ab++) {
-						temp_5=combinations[ab];
-						for(int k=0;k<3;k++){//user mate
-
-							for (int l=0;l<3;l++) {//combination loop with char....,.....s
-							
-						//		if(temp_count==2 && user.charAt(k)!=temp_5.charAt(l)){
-						//			return String.valueOf(temp_5.charAt(l));
-						//		}
-
-								if(user.charAt(k)==temp_5.charAt(l)){
-								
-									temp_count++;
-									// USe Label to check if temp_count is increase...
-									sd.setText(String.valueOf(temp_count));
-									break;
-								}
-								else 
-								tempStore= String.valueOf(temp_5.charAt(l)); 
-							}
-							if(temp_count==2){
-								// compare with combinations...........
-							}
-						}
-						if(temp_count>0){
-							temp_count=0;
-						}
-					}
+			}	
+			for (int ab=0;ab<48;ab++) {
+				temp_5=combinations[ab];
+				un=String.valueOf(temp_5.substring(0,2));
+				if(un.equals(inner_1) || un.equals(inner_2)){
+					return String.valueOf(temp_5.charAt(2));
 				}
 			}
 		}
 		else{
-
+			char b1,b2,b3;
+			String unc;
+			b1=computer.charAt(0);
+			b2=computer.charAt(1);
+			b3=computer.charAt(2);
+			inner_1=new StringBuilder().append(b1).append(b3).toString();
+			inner_2=new StringBuilder().append(b2).append(b3).toString();
+			for (int ab=0;ab<48;ab++) {
+				temp_5=combinations[ab];
+				unc=String.valueOf(temp_5.substring(0,2));
+				if(unc.equals(inner_1) || unc.equals(inner_2)){
+					if(user.charAt(3)!=temp_5.charAt(2))
+						return String.valueOf(temp_5.charAt(2));
+				}
+			}
+			String tempo="123456789";
+			for(int ac=0;ac<9;ac++){
+				if(user.charAt(0)==tempo.charAt(ac))
+					continue;		
+				else if(user.charAt(1)==tempo.charAt(ac))
+					continue;		
+				else if(user.charAt(2)==tempo.charAt(ac))
+					continue;	
+				else if(user.charAt(3)==tempo.charAt(ac))
+					continue;
+				else if(computer.charAt(0)==tempo.charAt(ac))
+					continue;	
+				else if(computer.charAt(1)==tempo.charAt(ac))
+					continue;	
+				else if(computer.charAt(2)==tempo.charAt(ac))
+					continue;
+				else
+					return	String.valueOf(tempo.charAt(ac));
+			}
 		}
 		return "0";
-	}	
+	}
 	public void nullify(){
 
 		box1.setEnabled(false);
